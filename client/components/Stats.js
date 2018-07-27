@@ -78,6 +78,7 @@ const mapDispatch = dispatch => {
   return {
     loadUser() {
       dispatch(fetchUserFromRequest())
+      dispatch(fetchUserStatsForYear())
     },
     loadUserStats(userId) {
       dispatch(fetchUserStatsForWeek(userId))

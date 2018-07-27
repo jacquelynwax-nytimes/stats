@@ -1,7 +1,6 @@
 body {
-    display: block;
-    margin: 8px;
-    font-family: franklin;
+  display: block;
+  margin: 8px;
 }
 
 html {
@@ -84,7 +83,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 0;
   border: 0;
   font-size: 100%;
-  font-family: franklin;
+  font: inherit;
   vertical-align: baseline
 }
 

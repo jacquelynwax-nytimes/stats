@@ -22,9 +22,9 @@ export class YearlyStats extends Component {
     }                                    // activeDay is used to set 'active' css
   }
 
-  // componentDidMount() {
-  //   // this.props.loadYearlyStats()
-  // }
+  componentDidMount() {
+    this.props.loadYearlyStats()
+  }
 
   createChartData = () => { // this is where we'll create the data that goes in each chart
     const { percentilesThisYear, userStatsThisYear } = this.props
@@ -36,9 +36,11 @@ export class YearlyStats extends Component {
     const data = []
     dailyPercentiles.map((dayOfData, i) => {
       let dataPoint = { name: dayOfData.PuzzelPrintDate, 'Bottom 10%': dayOfData.Percentiles[89], 'Median': dayOfData.Percentiles[50], 'Top 10%': dayOfData.Percentiles[9]}
-      console.log('i', i);
-      if (!!userPercentiles[i] && !!userPercentiles[i].SecondsSpentSolving) {
-        data.push(Object.assign({}, dataPoint, {'Your Time': userPercentiles[i].SecondsSpentSolving}))
+      if (!!userPercentiles && !!userPercentiles[i] && !!userPercentiles[i].SecondsSpentSolving) {
+        // fix this
+        if (dayOfData.PuzzlePrintDate === userPercentiles[i].PuzzlePrintDate) {
+          data.push(Object.assign({}, dataPoint, {'Your Time': userPercentiles[i].SecondsSpentSolving}))
+        }
       } else {
         data.push(dataPoint)
       }
@@ -103,14 +105,14 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = null;
-// const mapDispatch = dispatch => {
-//   return {
-//     loadYearlyStats(userId) {
-//       fetchUserStatsForYear(userId)
-//       fetchPercentilesForYear()
-//     }
-//   }
-// }
+// const mapDispatch = null;
+const mapDispatch = dispatch => {
+  return {
+    loadYearlyStats() {
+      fetchUserStatsForYear()
+      // fetchPercentilesForYear()
+    }
+  }
+}
 
 export default connect(mapState, mapDispatch)(YearlyStats)

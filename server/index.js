@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
+const fs = require('fs')
+const https = require('https')
 // const SequelizeStore = require('connect-session-sequelize')(session.Store)
 // const db = require('./db')
 // const sessionStore = new SequelizeStore({db})
@@ -39,6 +41,11 @@ if (process.env.NODE_ENV !== 'production') require('../secrets')
 //     done(err)
 //   }
 // })
+
+var certOptions = {
+  key: fs.readFileSync(path.resolve('./server.key')),
+  cert: fs.readFileSync(path.resolve('./server.crt'))
+}
 
 const createApp = () => {
   // logging middleware
@@ -96,13 +103,11 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
+  // const server = https.createServer(certOptions, app).listen(8080)
+
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
-
-  // set up our socket control center
-  // const io = socketio(server)
-  // require('./socket')(io)
 }
 
 // const syncDb = () => db.sync()
